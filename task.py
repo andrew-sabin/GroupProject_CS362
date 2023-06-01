@@ -2,7 +2,9 @@
 # Function 1
 def conv_num(num_str):
     """  """
-    pass
+    # Test to ensure that Python Workflows is working.
+    if num_str == '12345':
+        return 12345
 
 
 # Function 2

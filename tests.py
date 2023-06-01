@@ -1,6 +1,7 @@
 import unittest
 
-from task import conv_num, my_datetime, conv_endian
+# from task import conv_num, my_datetime, conv_endian
+from task import conv_num
 
 
 class TestCase(unittest.TestCase):
@@ -16,7 +17,7 @@ class TestCase(unittest.TestCase):
         Comments explaining the purpose of each test case were not part of
         the rubric but were made by the group."""
         # A string with all integer characters returns an integer.
-        # self.assertEqual(conv_num('12345'), 12345)
+        self.assertEqual(conv_num('12345'), 12345)
 
         # A string that starts with '-' and has a '.' should return a
         # negative float.
@@ -63,8 +64,42 @@ class TestCase(unittest.TestCase):
         # self.assertEqual(my_datetime(9876543210), '12-22-2282')
 
         # More than 400 years => leap days determined by (years // 4 - years
-        # / 100 + years // 400)
+        # // 100 + years // 400)
         # self.assertEqual(my_datetime(201653971200), '02-29-8360')
+
+    def test_conv_endian_examples(self):
+        """ Test cases provided as examples by the Group Project pt 2
+        description to test Function 3, which is conv_endian(num,
+        endian='big'). Any test cases created by the group appear after this
+        testing function.
+
+        Comments explaining the purpose of each test case were not part of
+        the rubric but were made by the group."""
+        # Converting an integer to hexadecimal, then to a string with spaces
+        # in-between every 2 characters.
+        # self.assertEqual(conv_endian(954786, 'big'), '0E 91 A2')
+
+        # endian='big' means that if no endian is provided, big endian occurs.
+        # self.assertEqual(conv_endian(954786), '0E 91 A2')
+
+        # negative integer should have a '-' in front of the first group of
+        # 2 characters.
+        # self.assertEqual(conv_endian(-954786), '-0E 91 A2')
+
+        # Little Endian = The order of the groups of 2 characters is reversed,
+        # but the order is not reversed within the groups of 2 characters.
+        # self.assertEqual(conv_endian(954786, 'little'), 'A2 91 0E')
+
+        # The order of the groups of 2 characters is reversed. Afterwards,
+        # the - shows up in front of the new 1st group of 2 characters.
+        # self.assertEqual(conv_endian(-954786, 'little'), '-A2 91 0E')
+
+        #
+        # self.assertEqual(conv_endian(num=-954786, endian='little'),
+        #                  '-A2 91 0E')
+
+        # Returns None is endian is not 'big', 'little', or nothing
+        # self.assertEqual(conv_endian(num=-954786, endian='small'), None)
 
 
 if __name__ == '__main__':
