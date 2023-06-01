@@ -1,5 +1,7 @@
 import unittest
 
+from task import conv_num, my_datetime, conv_endian
+
 
 class TestCase(unittest.TestCase):
 
@@ -41,6 +43,28 @@ class TestCase(unittest.TestCase):
         # A string with 2 or more dots is not a real float, so None is
         # returned.
         # self.assertEqual(conv_num('12.3.45'), None)
+
+    def test_my_datetime_examples(self):
+        """ Test cases provided as examples by the Group Project pt 2
+        description to test Function 2, which is my_datetime(num_sec). Any test
+        cases created by the group appear after this testing function.
+
+        Comments explaining the purpose of each test case were not part of
+        the rubric but were made by the group."""
+        # No seconds = original date
+        # self.assertEqual(my_datetime(0), '01-01-1970')
+
+        # Less than 4 years => no leap day in calculation, date determined by
+        # number of days in each specific month, with Feb having 28
+        # self.assertEqual(my_datetime(123456789), '11-29-1973')
+
+        # Less than 400 years => leap day determined by (years // 4 - years //
+        # 100). February has 29 days on leap years.
+        # self.assertEqual(my_datetime(9876543210), '12-22-2282')
+
+        # More than 400 years => leap days determined by (years // 4 - years
+        # / 100 + years // 400)
+        # self.assertEqual(my_datetime(201653971200), '02-29-8360')
 
 
 if __name__ == '__main__':
