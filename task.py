@@ -94,6 +94,73 @@ def conv_num(num_str):
             place_value -= 1
         return answer
 
+    # Case 3: decimal yes, negative yes, hex no => negative float
+    elif (num_str.count('.') == 1 and num_str.count('-') == 1) and \
+            (num_str[0] == '-' and num_str.count('x') == 0):
+        if num_str[-1] == '.':
+            # self.assertEqual(conv_num('-123.45'), -123.45)
+            num_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
+                        '7': 7, '8': 8, '9': 9}
+            place_value = len(num_str) - 1
+            answer = 0
+            # starts at index 1 because index 0 = negative sign
+            for i in range(1, len(num_str) - 1):
+                if num_str[i] not in string.digits:
+                    return None
+                add_to_answer = num_dict[num_str[i]] * 10 ** (place_value - 1)
+                answer += add_to_answer
+                place_value -= 1
+            answer += 0.0
+            return answer
+        # -.45 is not a valid number.
+        elif num_str[0:2] == '-.':
+            return None
+        # Example: -0.45 has period in index 2
+        elif num_str[2] == '.':
+            if num_str == '-0.':
+                return None
+            # self.assertEqual(conv_num('.45'), 0.45)
+            num_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
+                        '7': 7, '8': 8, '9': 9}
+            place_value = 1
+            answer = 0
+            for i in range(3, len(num_str)):
+                if num_str[i] not in string.digits:
+                    return None
+                add_to_answer = num_dict[num_str[i]] * 10 ** (-1 * (
+                    place_value))
+                answer += add_to_answer
+                place_value += 1
+            return answer
+    # Case 4: Negative Digits... decimal no, negative yes, hex no => negative
+    # only digits
+    elif num_str.count('.') == 0 and num_str.count('-') == 1 and \
+            num_str[0] == '-' and num_str.count('x') == 0:
+        num_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
+                    '7': 7, '8': 8, '9': 9}
+        place_value = len(num_str) - 1
+        answer = 0
+        for i in range(1, len(num_str)):
+            if num_str[i] not in string.digits:
+                return None
+            add_to_answer = num_dict[num_str[i]] * 10 ** (place_value - 1)
+            answer += add_to_answer
+            place_value -= 1
+        return answer
+    # Case 5: Positive Hexadecimal... decimal no, negative no, hex yes =>
+    # positive hexadecimal
+    # elif len(num_str) >= 3 and num_str[0:2] == '0x':
+
+
+    # Case 6: Negative Hexadecimal... decimal no, negative yes, hex yes =>
+    # negative hexadecimal
+    # elif len(num_str) >= 4 and num_str[0:3] == '-0x':
+
+
+    # if not in the 6 Cases:
+    else:
+        return None
+
 
 # Function 2
 def my_datetime(num_sec):
