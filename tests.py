@@ -2,6 +2,7 @@ import unittest
 
 # from task import conv_num, my_datetime, conv_endian
 from task import conv_num
+from task import conv_endian
 
 
 class TestCase(unittest.TestCase):
@@ -67,39 +68,48 @@ class TestCase(unittest.TestCase):
         # // 100 + years // 400)
         # self.assertEqual(my_datetime(201653971200), '02-29-8360')
 
-    def test_conv_endian_examples(self):
-        """ Test cases provided as examples by the Group Project pt 2
-        description to test Function 3, which is conv_endian(num,
-        endian='big'). Any test cases created by the group appear after this
-        testing function.
 
-        Comments explaining the purpose of each test case were not part of
-        the rubric but were made by the group."""
-        # Converting an integer to hexadecimal, then to a string with spaces
-        # in-between every 2 characters.
-        # self.assertEqual(conv_endian(954786, 'big'), '0E 91 A2')
+# ---------------------TESTS FOR CONV_ENDIAN--------------------------------
 
-        # endian='big' means that if no endian is provided, big endian occurs.
-        # self.assertEqual(conv_endian(954786), '0E 91 A2')
+    def test_endian_1(self):
+        """This tests a positive even digit length number with a big endian"""
+        self.assertEqual(conv_endian(954786, 'big'), '0E 91 A2')
 
-        # negative integer should have a '-' in front of the first group of
-        # 2 characters.
-        # self.assertEqual(conv_endian(-954786), '-0E 91 A2')
+    def test_endian_2(self):
+        """This tests a positive even digit length number with no endian"""
+        self.assertEqual(conv_endian(954786), '0E 91 A2')
 
-        # Little Endian = The order of the groups of 2 characters is reversed,
-        # but the order is not reversed within the groups of 2 characters.
-        # self.assertEqual(conv_endian(954786, 'little'), 'A2 91 0E')
+    def test_endian_3(self):
+        """This tests a negative even digit length number with no endian"""
+        self.assertEqual(conv_endian(-954786), '-0E 91 A2')
 
-        # The order of the groups of 2 characters is reversed. Afterwards,
-        # the - shows up in front of the new 1st group of 2 characters.
-        # self.assertEqual(conv_endian(-954786, 'little'), '-A2 91 0E')
+    def test_endian_4(self):
+        """This tests a positive even digit length number with little endian"""
+        self.assertEqual(conv_endian(954786, 'little'), 'A2 91 0E')
 
-        #
-        # self.assertEqual(conv_endian(num=-954786, endian='little'),
-        #                  '-A2 91 0E')
+    def test_endian_5(self):
+        """This tests a negative even digit length number with little endian"""
+        self.assertEqual(conv_endian(-954786, 'little'), '-A2 91 0E')
 
-        # Returns None is endian is not 'big', 'little', or nothing
-        # self.assertEqual(conv_endian(num=-954786, endian='small'), None)
+    def test_endian_6(self):
+        """This tests a negative even digit length number with little endian
+        with the parameters specified"""
+        self.assertEqual(conv_endian(num=-954786, endian='little'),
+                         '-A2 91 0E')
+
+    def test_endian_7(self):
+        """This tests a negative even digit length number with endian
+        labeled small and with the parameters specified"""
+        self.assertEqual(conv_endian(num=-954786, endian='small'), None)
+
+    def test_endian_8(self):
+        """This tests a positive odd digit length number with no
+        endian labeled."""
+        self.assertEqual(conv_endian(54786), 'D6 02')
+
+    def test_endian_9(self):
+        """This tests 0 with no endian labeled."""
+        self.assertEqual(conv_endian(0), '0')
 
 
 if __name__ == '__main__':
