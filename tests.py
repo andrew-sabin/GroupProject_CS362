@@ -24,10 +24,10 @@ class TestCase(unittest.TestCase):
         # self.assertEqual(conv_num('-123.45'), -123.45)
 
         # A string that starts with '.' should return a float less than 1.
-        # self.assertEqual(conv_num('.45'), 0.45)
+        self.assertEqual(conv_num('.45'), 0.45)
 
         # A string that ends with '.' should return a float.
-        # self.assertEqual(conv_num('123.'), 123.0)
+        self.assertEqual(conv_num('123.'), 123.0)
 
         # A string that starts with 0x should return the integer version of
         # the hexadecimal.
@@ -43,7 +43,7 @@ class TestCase(unittest.TestCase):
 
         # A string with 2 or more dots is not a real float, so None is
         # returned.
-        # self.assertEqual(conv_num('12.3.45'), None)
+        self.assertEqual(conv_num('12.3.45'), None)
 
     def test_my_datetime_examples(self):
         """ Test cases provided as examples by the Group Project pt 2
