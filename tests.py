@@ -145,6 +145,8 @@ class TestCase(unittest.TestCase):
         self.assertEqual(my_datetime(2678400), '02-01-1970')
 
     # Test to see if year is changed by program, num_sec = (86400 * 365)
+    def test_my_datetime_personal3(self):
+        self.assertEqual(my_datetime(31536000), '01-01-1971')
 
 
 # ---------------------TESTS FOR CONV_ENDIAN--------------------------------

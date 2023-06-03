@@ -172,13 +172,12 @@ def my_datetime(num_sec):
     # key is the month, value is the amount of days in that month
     months_year = {'1': 31, '2': [28, 29], '3': 31, '4': 30, '5': 31,
                    '6': 30, '7': 31, '8': 31, '9': 30, '10': 31, '11': 30, '12': 31}
-    # set dictionary for the days of each month for leap years
-    # leap_year = {'01':31, '02':28, '03':31, '04':30, '05':31, '06':30, '07':31, '08':31, '09':30, '10':31, '11':30, '12':31}
 
     # set curr_month to be equal to the amount of days set in the months_year
     curr_month = months_year[str(month)]
 
-    # set for loop for increase in days, 86400 seconds in a day
+    # set while loop to increase in days and decrease in seconds per 86400 seconds until
+    # num_sec is no longer greater or equal to 36399
     while num_sec > 86399:
         num_sec -= 86400
         day += 1
@@ -188,7 +187,11 @@ def my_datetime(num_sec):
             month += 1
             day = 1
         # if statement to see if day of the year is 2 for february
-            if month == 2:
+            if month > 12:
+                month = 1
+                year += 1
+                curr_month = months_year[str(month)]
+            elif month == 2:
                 if year % 4 == 0:
                     curr_month = months_year['2'][1]
                 else:
@@ -203,6 +206,7 @@ def my_datetime(num_sec):
         # if False, add to year by 1 and reset month back to 1
 
     # set a string value based on the month-day-year
+    # may turn this into a helper function
     if month < 10:
         month = '0'+str(month)
     else:
