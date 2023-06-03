@@ -137,6 +137,8 @@ class TestCase(unittest.TestCase):
     # ----------------- Non-Example Tests-------------------------------
 
     # Test to see if day is increased by program, num_sec = 86400
+    def test_my_datetime_personal1(self):
+        self.assertEqual(my_datetime(86400), '01-02-1970')
 
     # Test to see if month is changed by program, num_sec = (86400 * 32)
 
