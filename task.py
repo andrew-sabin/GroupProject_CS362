@@ -17,7 +17,7 @@ def conv_num(num_str):
 
     Possible
     1. decimal yes, negative no, hex no => positive float
-    2. decimal no, negative no, hex no => only digits
+    2. decimal no, negative no, hex no => positive, only digits
     3. decimal yes, negative yes, hex no => negative float
     4. decimal no, negative yes, hex no => negative, only digits
     X. decimal yes, negative no, hex yes => rubric says NOT a valid hex input
@@ -38,7 +38,8 @@ def conv_num(num_str):
         return None
     # if 2 characters (so no way for hexadecimal prefix) and one of the
     # characters is a letter
-    elif num_str == 2 and (num_str[0] in string.ascii_lowercase or num_str[
+    elif len(num_str) == 2 and (num_str[0] in string.ascii_lowercase or
+                                num_str[
         0] in string.ascii_uppercase) or (num_str[1] in
                                           string.ascii_lowercase or num_str[0]
                                           in string.ascii_uppercase):
@@ -47,7 +48,7 @@ def conv_num(num_str):
     elif num_str.count('.') >= 2:
         return None
     # Case 1: if 1 decimal, no neg, no hex
-    elif num_str.count('.') == 1 and num_str.count('-') == 0 & \
+    elif num_str.count('.') == 1 and num_str.count('-') == 0 and \
             num_str.count('x') == 0:
         if num_str[-1] == '.':
             # self.assertEqual(conv_num('123.'), 123.0)
@@ -72,10 +73,25 @@ def conv_num(num_str):
             for i in range(1, len(num_str)):
                 if num_str[i] not in string.digits:
                     return None
-                add_to_answer = num_dict[num_str[i]] * 10 ** (-1 * (
+                add_to_answer = num_dict[num_str[i]] / (10 ** (
                         place_value))
                 answer += add_to_answer
                 place_value += 1
+            return answer
+        else:
+            decimal_index = num_str.index('.')
+            answer = 0
+            place_value = decimal_index - 1
+            num_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
+                        '7': 7, '8': 8, '9': 9}
+            for i in range(decimal_index):
+                answer += (num_dict[num_str[i]] * 10**place_value)
+                place_value -= 1
+
+            decimal_place_value = 1
+            for j in range(decimal_index + 1, len(num_str)):
+                answer += num_dict[num_str[j]] / (10**decimal_place_value)
+                decimal_place_value += 1
             return answer
 
     # Case 2: if no decimal, no negative, no hexadecimal
@@ -101,7 +117,7 @@ def conv_num(num_str):
             # self.assertEqual(conv_num('-123.45'), -123.45)
             num_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
                         '7': 7, '8': 8, '9': 9}
-            place_value = len(num_str) - 1
+            place_value = len(num_str) - 2
             answer = 0
             # starts at index 1 because index 0 = negative sign
             for i in range(1, len(num_str) - 1):
@@ -111,6 +127,7 @@ def conv_num(num_str):
                 answer += add_to_answer
                 place_value -= 1
             answer += 0.0
+            answer *= -1
             return answer
         # -.45 is not a valid number.
         elif num_str[0:2] == '-.':
@@ -127,10 +144,26 @@ def conv_num(num_str):
             for i in range(3, len(num_str)):
                 if num_str[i] not in string.digits:
                     return None
-                add_to_answer = num_dict[num_str[i]] * 10 ** (-1 * (
-                    place_value))
+                add_to_answer = num_dict[num_str[i]] / (10 ** place_value)
                 answer += add_to_answer
                 place_value += 1
+            answer *= -1
+            return answer
+        else:
+            decimal_index = num_str.index('.')
+            answer = 0
+            place_value = decimal_index - 2
+            num_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
+                        '7': 7, '8': 8, '9': 9}
+            for i in range(1, decimal_index):
+                answer += num_dict[num_str[i]] * 10 ** place_value
+                place_value -= 1
+
+            decimal_place_value = 1
+            for j in range(decimal_index + 1, len(num_str)):
+                answer += (num_dict[num_str[j]] / (10 ** decimal_place_value))
+                decimal_place_value += 1
+            answer *= -1
             return answer
     # Case 4: Negative Digits... decimal no, negative yes, hex no => negative
     # only digits
@@ -146,16 +179,44 @@ def conv_num(num_str):
             add_to_answer = num_dict[num_str[i]] * 10 ** (place_value - 1)
             answer += add_to_answer
             place_value -= 1
+        answer *= -1
         return answer
     # Case 5: Positive Hexadecimal... decimal no, negative no, hex yes =>
     # positive hexadecimal
-    # elif len(num_str) >= 3 and num_str[0:2] == '0x':
-
+    elif len(num_str) >= 3 and num_str[0:2] == '0x' and num_str.count('.') \
+            == 0 and num_str.count('-') == 0:
+        hex_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
+                    '7': 7, '8': 8, '9': 9, 'A': 10, 'B': 11, 'C': 12,
+                    'D': 13, 'E': 14, 'F': 15, 'a': 10, 'b': 11, 'c': 12,
+                    'd': 13, 'e': 14, 'f': 15}
+        place_value = len(num_str) - 2
+        answer = 0
+        for i in range(2, len(num_str)):
+            if num_str[i] not in string.hexdigits:
+                return None
+            else:
+                add_to_answer = hex_dict[num_str[i]] * 16 ** (place_value - 1)
+                answer += add_to_answer
+                place_value -= 1
+        return answer
 
     # Case 6: Negative Hexadecimal... decimal no, negative yes, hex yes =>
     # negative hexadecimal
-    # elif len(num_str) >= 4 and num_str[0:3] == '-0x':
-
+    elif len(num_str) >= 4 and num_str[0:3] == '-0x':
+        hex_dict = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6,
+                    '7': 7, '8': 8, '9': 9, 'A': 10, 'B': 11, 'C': 12,
+                    'D': 13, 'E': 14, 'F': 15, 'a': 10, 'b': 11, 'c': 12,
+                    'd': 13, 'e': 14, 'f': 15}
+        place_value = len(num_str) - 3
+        answer = 0
+        for i in range(3, len(num_str)):
+            if num_str[i] not in string.hexdigits:
+                return None
+            add_to_answer = hex_dict[num_str[i]] * 16 ** (place_value - 1)
+            answer += add_to_answer
+            place_value -= 1
+        answer *= -1
+        return answer
 
     # if not in the 6 Cases:
     else:
