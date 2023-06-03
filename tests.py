@@ -3,6 +3,7 @@ import unittest
 # from task import conv_num, my_datetime, conv_endian
 from task import conv_num
 from task import conv_endian
+from task import my_datetime
 
 
 class TestCase(unittest.TestCase):
@@ -107,15 +108,19 @@ class TestCase(unittest.TestCase):
         decimal no, negative yes, hex yes """
         self.assertEqual(conv_num('-0xAD4'), -2772)
 
-    def test_my_datetime_examples(self):
-        """ Test cases provided as examples by the Group Project pt 2
-        description to test Function 2, which is my_datetime(num_sec). Any test
-        cases created by the group appear after this testing function.
+    # ---------------------TESTS FOR MY_DATETIME----------------------------------
 
-        Comments explaining the purpose of each test case were not part of
-        the rubric but were made by the group."""
-        # No seconds = original date
-        # self.assertEqual(my_datetime(0), '01-01-1970')
+    # def test_my_datetime_examples(self):
+    #     """ Test cases provided as examples by the Group Project pt 2
+    #     description to test Function 2, which is my_datetime(num_sec). Any test
+    #     cases created by the group appear after this testing function.
+
+    #     Comments explaining the purpose of each test case were not part of
+    #     the rubric but were made by the group."""
+
+    # No seconds = original date
+    def test_my_datetime_example1(self):
+        self.assertEqual(my_datetime(0), '01-01-1970')
 
         # Less than 4 years => no leap day in calculation, date determined by
         # number of days in each specific month, with Feb having 28
@@ -128,6 +133,14 @@ class TestCase(unittest.TestCase):
         # More than 400 years => leap days determined by (years // 4 - years
         # // 100 + years // 400)
         # self.assertEqual(my_datetime(201653971200), '02-29-8360')
+
+    # ----------------- Non-Example Tests-------------------------------
+
+    # Test to see if day is increased by program, num_sec = 86400
+
+    # Test to see if month is changed by program, num_sec = (86400 * 32)
+
+    # Test to see if year is changed by program, num_sec = (86400 *366)
 
 
 # ---------------------TESTS FOR CONV_ENDIAN--------------------------------

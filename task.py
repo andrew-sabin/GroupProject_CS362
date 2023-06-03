@@ -73,7 +73,7 @@ def conv_num(num_str):
                 if num_str[i] not in string.digits:
                     return None
                 add_to_answer = num_dict[num_str[i]] * 10 ** (-1 * (
-                        place_value))
+                    place_value))
                 answer += add_to_answer
                 place_value += 1
             return answer
@@ -151,11 +151,9 @@ def conv_num(num_str):
     # positive hexadecimal
     # elif len(num_str) >= 3 and num_str[0:2] == '0x':
 
-
     # Case 6: Negative Hexadecimal... decimal no, negative yes, hex yes =>
     # negative hexadecimal
     # elif len(num_str) >= 4 and num_str[0:3] == '-0x':
-
 
     # if not in the 6 Cases:
     else:
@@ -165,6 +163,26 @@ def conv_num(num_str):
 # Function 2
 def my_datetime(num_sec):
     """  """
+    dfault_datetime = "01-01-1970"
+    # set values for default month, day, year
+
+    # set dictionary for the days of each month for normal years
+
+    # set dictionary for the days of each month for leap years
+
+    # set if/elif statements for error checking
+
+    # set if/elif statements for normal or leap year
+
+    # set for loop for increase in days, 86400 seconds in a day
+
+    # set while loop to check to see if day is less than or equal to the current month's day value
+    # sets day back to 1 if true
+
+    # set if statement to check for final day in year
+    # resets day and month values if true
+
+    return dfault_datetime
     pass
 
 
