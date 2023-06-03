@@ -22,29 +22,90 @@ class TestCase(unittest.TestCase):
 
         # A string that starts with '-' and has a '.' should return a
         # negative float.
-        # self.assertEqual(conv_num('-123.45'), -123.45)
+        self.assertEqual(conv_num('-123.45'), -123.45)
 
         # A string that starts with '.' should return a float less than 1.
-        # self.assertEqual(conv_num('.45'), 0.45)
+        self.assertEqual(conv_num('.45'), 0.45)
 
         # A string that ends with '.' should return a float.
-        # self.assertEqual(conv_num('123.'), 123.0)
+        self.assertEqual(conv_num('123.'), 123.0)
 
         # A string that starts with 0x should return the integer version of
         # the hexadecimal.
-        # self.assertEqual(conv_num('0xAD4'), 2772)
+        self.assertEqual(conv_num('0xAD4'), 2772)
 
         # A string that starts with 0x & has letters from G to Z is not a
         # real hexadecimal, so None is returned.
-        # self.assertEqual(conv_num('0xAZ4'), None)
+        self.assertEqual(conv_num('0xAZ4'), None)
 
         # A string with letters & no 0x is not a real hexadecimal, so None
         # is returned.
-        # self.assertEqual(conv_num('12345A'), None)
+        self.assertEqual(conv_num('12345A'), None)
 
         # A string with 2 or more dots is not a real float, so None is
         # returned.
-        # self.assertEqual(conv_num('12.3.45'), None)
+        self.assertEqual(conv_num('12.3.45'), None)
+
+    def test_conv_num_notPossible(self):
+        """ Return None for any of these:
+            a) no characters
+            b) empty space present
+            c) 1-character string is not a digit
+            d) +/- hex prefix but nothing afterwards
+            e) 2 characters & 1 is any letter (no way to fit in a hex prefix
+            f) 2 or more decimal points/periods
+            g) hex prefix but letter is g to z
+            h) punctuation that is not '.' is present
+        """
+        self.assertEqual(conv_num(''), None)
+        self.assertEqual(conv_num('123 45'), None)
+        self.assertEqual(conv_num('A'), None)
+        self.assertEqual(conv_num('0x'), None)
+        self.assertEqual(conv_num('-0x'), None)
+        self.assertEqual(conv_num('2B'), None)
+        self.assertEqual(conv_num('B2'), None)
+        self.assertEqual(conv_num('123.45.'), None)
+        self.assertEqual(conv_num('0xA5J'), None)
+        self.assertEqual(conv_num('-0xA5J'), None)
+        self.assertEqual(conv_num('1234/5'), None)
+
+    def test_conv_num_case1(self):
+        """ Positive Float
+        decimal yes, negative no, hex no => positive float
+        """
+        self.assertEqual(conv_num('123.45'), 123.45)
+        self.assertEqual(conv_num('123.'), 123.0)
+        self.assertEqual(conv_num('.45'), 0.45)
+
+    def test_conv_num_case2(self):
+        """ Positive Digits
+        decimal no, negative no, hex no => only digits """
+        self.assertEqual(conv_num('12345'), 12345)
+        self.assertEqual(conv_num('10234567'), 10234567)
+
+    def test_conv_num_case3(self):
+        """ Negative Float
+        decimal yes, negative yes, hex no => positive float
+        """
+        self.assertEqual(conv_num('-123.'), 123.0)
+        self.assertEqual(conv_num('-0.45'), -0.45)
+        self.assertEqual(conv_num('-.45'), None)
+
+    def test_conv_num_case4(self):
+        """ Negative Digits
+        decimal no, negative yes, hex no => only digits """
+        self.assertEqual(conv_num('-12345'), -12345)
+        self.assertEqual(conv_num('-10234567'), -10234567)
+
+    def test_conv_num_case5(self):
+        """ Positive Hexadecimal
+        decimal no, negative no, hex yes """
+        self.assertEqual(conv_num('0xAD4'), 2772)
+
+    def test_conv_num_case6(self):
+        """ Negative Hexadecimal
+        decimal no, negative yes, hex yes """
+        self.assertEqual(conv_num('-0xAD4'), -2772)
 
     def test_my_datetime_examples(self):
         """ Test cases provided as examples by the Group Project pt 2
