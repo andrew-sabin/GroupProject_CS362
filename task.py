@@ -162,28 +162,51 @@ def conv_num(num_str):
 
 # Function 2
 def my_datetime(num_sec):
-    """  """
-    dfault_datetime = "01-01-1970"
+    """ Returns the mm-dd-yyyy string value based on how many seconds were entered for num_sec"""
     # set values for default month, day, year
+    month = 1
+    day = 1
+    year = 1970
 
     # set dictionary for the days of each month for normal years
-
+    # key is the month, value is the amount of days in that month
+    months_year = {1: 31, 2: [28, 29], 3: 31, 4: 30, 5: 31,
+                   6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
     # set dictionary for the days of each month for leap years
-
-    # set if/elif statements for error checking
+    # leap_year = {'01':31, '02':28, '03':31, '04':30, '05':31, '06':30, '07':31, '08':31, '09':30, '10':31, '11':30, '12':31}
 
     # set if/elif statements for normal or leap year
 
     # set for loop for increase in days, 86400 seconds in a day
+    # while num_sec > 86399:
+    # subtract num_sec by 86400
 
-    # set while loop to check to see if day is less than or equal to the current month's day value
-    # sets day back to 1 if true
+    # add + 1 to day
 
-    # set if statement to check for final day in year
-    # resets day and month values if true
+    # if-statement to see if day of the year is less than or equal to the amount of days in year
+    # if false add to month by 1 and reset days to 1
 
-    return dfault_datetime
-    pass
+    # if statement to see if day of the year is 2 for february
+    # if True, test to see if the year % 4 is equal to 0
+    # if True set the days_in_month to 29
+    # if False set the days_in_month to 28
+
+    # if-statement to see if the month in the year is less than or equal to 12
+    # if False, add to year by 1 and reset month back to 1
+
+    # set a string value based on the month-day-year
+    if month < 10:
+        month = '0'+str(month)
+    else:
+        month = str(month)
+
+    if day < 10:
+        day = '0'+str(day)
+    else:
+        day = str(day)
+    mmDdYy = month + '-' + day + '-' + str(year)
+
+    return mmDdYy
 
 
 # Function 3
