@@ -134,7 +134,8 @@ class TestCase(unittest.TestCase):
 
         # More than 400 years => leap days determined by (years // 4 - years
         # // 100 + years // 400)
-        # self.assertEqual(my_datetime(201653971200), '02-29-8360')
+    def test_my_datetime_example4(self):
+        self.assertEqual(my_datetime(201653971200), '02-29-8360')
 
     # ----------------- Non-Example Tests-------------------------------
 
