@@ -181,8 +181,6 @@ def my_datetime(num_sec):
     while num_sec > 86399:
         num_sec -= 86400
         day += 1
-        # if-statement to see if day is less than or equal to the amount of days in month
-        # if false add to month by 1 and reset days to 1
         if day > curr_month:
             month += 1
             day = 1
@@ -198,27 +196,24 @@ def my_datetime(num_sec):
                     curr_month = months_year['2'][0]
             else:
                 curr_month = months_year[str(month)]
-        # if True, test to see if the year % 4 is equal to 0
-        # if True set the days_in_month to 29
-        # if False set the days_in_month to 28
 
-        # if-statement to see if the month in the year is less than or equal to 12
-        # if False, add to year by 1 and reset month back to 1
+    # date_to_string() takes the month, day, and year variables
+    # and returns a string with the date formatted as 'MM-DD-YYYY'
+    def date_to_string(month, day, year):
+        if month < 10:
+            str_month = '0'+str(month)
+        else:
+            str_month = str(month)
 
-    # set a string value based on the month-day-year
-    # may turn this into a helper function
-    if month < 10:
-        month = '0'+str(month)
-    else:
-        month = str(month)
+        if day < 10:
+            str_day = '0'+str(day)
+        else:
+            str_day = str(day)
+        mmDdYy = str_month + '-' + str_day + '-' + str(year)
 
-    if day < 10:
-        day = '0'+str(day)
-    else:
-        day = str(day)
-    mmDdYy = month + '-' + day + '-' + str(year)
-
-    return mmDdYy
+        return mmDdYy
+    string_date = date_to_string(month, day, year)
+    return string_date
 
 
 # Function 3
