@@ -192,7 +192,7 @@ def my_datetime(num_sec):
                 year += 1
                 curr_month = months_year[str(month)]
             elif month == 2:
-                if year % 4 == 0:
+                if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
                     curr_month = months_year['2'][1]
                 else:
                     curr_month = months_year['2'][0]

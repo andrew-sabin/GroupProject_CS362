@@ -124,11 +124,13 @@ class TestCase(unittest.TestCase):
 
         # Less than 4 years => no leap day in calculation, date determined by
         # number of days in each specific month, with Feb having 28
-        # self.assertEqual(my_datetime(123456789), '11-29-1973')
+    def test_my_datetime_example2(self):
+        self.assertEqual(my_datetime(123456789), '11-29-1973')
 
         # Less than 400 years => leap day determined by (years // 4 - years //
         # 100). February has 29 days on leap years.
-        # self.assertEqual(my_datetime(9876543210), '12-22-2282')
+    def test_my_datetime_example3(self):
+        self.assertEqual(my_datetime(9876543210), '12-22-2282')
 
         # More than 400 years => leap days determined by (years // 4 - years
         # // 100 + years // 400)
