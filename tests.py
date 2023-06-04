@@ -108,7 +108,6 @@ class TestCase(unittest.TestCase):
         decimal no, negative yes, hex yes """
         self.assertEqual(conv_num('-0xAD4'), -2772)
 
-
     # ---------------------TESTS FOR MY_DATETIME------------------------------
 
     # def test_my_datetime_examples(self):
@@ -118,7 +117,6 @@ class TestCase(unittest.TestCase):
 
     #     Comments explaining the purpose of each test case were not part of
     #     the rubric but were made by the group."""
-
 
     # No seconds = original date
     def test_my_datetime_example1(self):
@@ -153,10 +151,7 @@ class TestCase(unittest.TestCase):
     def test_my_datetime_personal3(self):
         self.assertEqual(my_datetime(31536000), '01-01-1971')
 
-
 # ---------------------TESTS FOR CONV_ENDIAN--------------------------------
-
-
     def test_endian_1(self):
         """This tests a positive even digit length number with a big endian"""
         self.assertEqual(conv_endian(954786, 'big'), '0E 91 A2')
