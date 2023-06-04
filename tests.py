@@ -2,6 +2,8 @@ import unittest
 
 # from task import conv_num, my_datetime, conv_endian
 from task import conv_num
+from task import conv_endian
+from task import my_datetime
 
 
 class TestCase(unittest.TestCase):
@@ -106,15 +108,21 @@ class TestCase(unittest.TestCase):
         decimal no, negative yes, hex yes """
         self.assertEqual(conv_num('-0xAD4'), -2772)
 
-    def test_my_datetime_examples(self):
-        """ Test cases provided as examples by the Group Project pt 2
-        description to test Function 2, which is my_datetime(num_sec). Any test
-        cases created by the group appear after this testing function.
 
-        Comments explaining the purpose of each test case were not part of
-        the rubric but were made by the group."""
-        # No seconds = original date
-        # self.assertEqual(my_datetime(0), '01-01-1970')
+    # ---------------------TESTS FOR MY_DATETIME------------------------------
+
+    # def test_my_datetime_examples(self):
+    #     """ Test cases provided as examples by the Group Project pt 2
+    #     description to test Function 2, which is my_datetime(num_sec). Any
+    #     test cases created by the group appear after this testing function.
+
+    #     Comments explaining the purpose of each test case were not part of
+    #     the rubric but were made by the group."""
+
+
+    # No seconds = original date
+    def test_my_datetime_example1(self):
+        self.assertEqual(my_datetime(0), '01-01-1970')
 
         # Less than 4 years => no leap day in calculation, date determined by
         # number of days in each specific month, with Feb having 28
@@ -128,39 +136,61 @@ class TestCase(unittest.TestCase):
         # // 100 + years // 400)
         # self.assertEqual(my_datetime(201653971200), '02-29-8360')
 
-    def test_conv_endian_examples(self):
-        """ Test cases provided as examples by the Group Project pt 2
-        description to test Function 3, which is conv_endian(num,
-        endian='big'). Any test cases created by the group appear after this
-        testing function.
+    # ----------------- Non-Example Tests-------------------------------
 
-        Comments explaining the purpose of each test case were not part of
-        the rubric but were made by the group."""
-        # Converting an integer to hexadecimal, then to a string with spaces
-        # in-between every 2 characters.
-        # self.assertEqual(conv_endian(954786, 'big'), '0E 91 A2')
+    # Test to see if day is increased by program, num_sec = 86400
+    def test_my_datetime_personal1(self):
+        self.assertEqual(my_datetime(86400), '01-02-1970')
 
-        # endian='big' means that if no endian is provided, big endian occurs.
-        # self.assertEqual(conv_endian(954786), '0E 91 A2')
+    # Test to see if month is changed by program, num_sec = (86400 * 31)
+    def test_my_datetime_personal2(self):
+        self.assertEqual(my_datetime(2678400), '02-01-1970')
 
-        # negative integer should have a '-' in front of the first group of
-        # 2 characters.
-        # self.assertEqual(conv_endian(-954786), '-0E 91 A2')
+    # Test to see if year is changed by program, num_sec = (86400 * 365)
 
-        # Little Endian = The order of the groups of 2 characters is reversed,
-        # but the order is not reversed within the groups of 2 characters.
-        # self.assertEqual(conv_endian(954786, 'little'), 'A2 91 0E')
 
-        # The order of the groups of 2 characters is reversed. Afterwards,
-        # the - shows up in front of the new 1st group of 2 characters.
-        # self.assertEqual(conv_endian(-954786, 'little'), '-A2 91 0E')
+# ---------------------TESTS FOR CONV_ENDIAN--------------------------------
 
-        #
-        # self.assertEqual(conv_endian(num=-954786, endian='little'),
-        #                  '-A2 91 0E')
 
-        # Returns None is endian is not 'big', 'little', or nothing
-        # self.assertEqual(conv_endian(num=-954786, endian='small'), None)
+    def test_endian_1(self):
+        """This tests a positive even digit length number with a big endian"""
+        self.assertEqual(conv_endian(954786, 'big'), '0E 91 A2')
+
+    def test_endian_2(self):
+        """This tests a positive even digit length number with no endian"""
+        self.assertEqual(conv_endian(954786), '0E 91 A2')
+
+    def test_endian_3(self):
+        """This tests a negative even digit length number with no endian"""
+        self.assertEqual(conv_endian(-954786), '-0E 91 A2')
+
+    def test_endian_4(self):
+        """This tests a positive even digit length number with little endian"""
+        self.assertEqual(conv_endian(954786, 'little'), 'A2 91 0E')
+
+    def test_endian_5(self):
+        """This tests a negative even digit length number with little endian"""
+        self.assertEqual(conv_endian(-954786, 'little'), '-A2 91 0E')
+
+    def test_endian_6(self):
+        """This tests a negative even digit length number with little endian
+        with the parameters specified"""
+        self.assertEqual(conv_endian(num=-954786, endian='little'),
+                         '-A2 91 0E')
+
+    def test_endian_7(self):
+        """This tests a negative even digit length number with endian
+        labeled small and with the parameters specified"""
+        self.assertEqual(conv_endian(num=-954786, endian='small'), None)
+
+    def test_endian_8(self):
+        """This tests a positive odd digit length number with no
+        endian labeled."""
+        self.assertEqual(conv_endian(54786), 'D6 02')
+
+    def test_endian_9(self):
+        """This tests 0 with no endian labeled."""
+        self.assertEqual(conv_endian(0), '0')
 
 
 if __name__ == '__main__':
