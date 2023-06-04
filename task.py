@@ -42,7 +42,7 @@ def conv_num(num_str):
     elif len(num_str) >= 4 and num_str[0:3] == '-0x':
         return negative_hexadecimal(num_str)
 
-    # if not in the 6 Cases, such as Positive/Negative Float Hexadecimals:
+    # if not in the 6 Cases:
     else:
         return None
 
@@ -203,4 +203,4 @@ def negative_hexadecimal(num_str):
     """ Negative Hex = decimal no, negative yes, hex yes """
     answer = conv_int_or_hex_helper(num_str, string.hexdigits, 3, len(num_str),
                                     len(num_str) - 3, 16)
-    return None if answer is None else answer * -1  # convert to neg
+    return None if answer is None else answer * -1
