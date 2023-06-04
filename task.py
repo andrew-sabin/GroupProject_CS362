@@ -214,49 +214,48 @@ def my_datetime(num_sec):
     # key is the month, value is the amount of days in that month
     months_year = {'1': 31, '2': [28, 29], '3': 31, '4': 30, '5': 31,
                    '6': 30, '7': 31, '8': 31, '9': 30, '10': 31, '11': 30, '12': 31}
-    # set dictionary for the days of each month for leap years
-    # leap_year = {'01':31, '02':28, '03':31, '04':30, '05':31, '06':30, '07':31, '08':31, '09':30, '10':31, '11':30, '12':31}
 
     # set curr_month to be equal to the amount of days set in the months_year
     curr_month = months_year[str(month)]
 
-    # set for loop for increase in days, 86400 seconds in a day
+    # set while loop to increase in days and decrease in seconds per 86400 seconds until
+    # num_sec is no longer greater or equal to 36399
     while num_sec > 86399:
         num_sec -= 86400
         day += 1
-        # if-statement to see if day is less than or equal to the amount of days in month
-        # if false add to month by 1 and reset days to 1
         if day > curr_month:
             month += 1
             day = 1
         # if statement to see if day of the year is 2 for february
-            if month == 2:
-                if year % 4 == 0:
+            if month > 12:
+                month = 1
+                year += 1
+                curr_month = months_year[str(month)]
+            elif month == 2:
+                if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
                     curr_month = months_year['2'][1]
                 else:
                     curr_month = months_year['2'][0]
             else:
                 curr_month = months_year[str(month)]
-        # if True, test to see if the year % 4 is equal to 0
-        # if True set the days_in_month to 29
-        # if False set the days_in_month to 28
 
-        # if-statement to see if the month in the year is less than or equal to 12
-        # if False, add to year by 1 and reset month back to 1
+    # date_to_string() takes the month, day, and year variables
+    # and returns a string with the date formatted as 'MM-DD-YYYY'
+    def date_to_string(month, day, year):
+        if month < 10:
+            str_month = '0'+str(month)
+        else:
+            str_month = str(month)
 
-    # set a string value based on the month-day-year
-    if month < 10:
-        month = '0'+str(month)
-    else:
-        month = str(month)
+        if day < 10:
+            str_day = '0'+str(day)
+        else:
+            str_day = str(day)
+        mmDdYy = str_month + '-' + str_day + '-' + str(year)
 
-    if day < 10:
-        day = '0'+str(day)
-    else:
-        day = str(day)
-    mmDdYy = month + '-' + day + '-' + str(year)
-
-    return mmDdYy
+        return mmDdYy
+    string_date = date_to_string(month, day, year)
+    return string_date
 
 
 # Function 3
