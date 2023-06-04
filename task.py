@@ -52,6 +52,7 @@ def conv_num(num_str):
     elif len(num_str) >= 4 and num_str[0:3] == '-0x':
         return negative_hexadecimal(num_str)
 
+
     # if not in the 6 Cases:
     else:
         return None
@@ -203,14 +204,109 @@ def negative_hexadecimal(num_str):
 
 # Function 2
 def my_datetime(num_sec):
-    """  """
-    pass
+    """ Returns the mm-dd-yyyy string value based on how many seconds were entered for num_sec"""
+    # set values for default month, day, year
+    month = 1
+    day = 1
+    year = 1970
+
+    # set dictionary for the days of each month for normal years
+    # key is the month, value is the amount of days in that month
+    months_year = {'1': 31, '2': [28, 29], '3': 31, '4': 30, '5': 31,
+                   '6': 30, '7': 31, '8': 31, '9': 30, '10': 31, '11': 30, '12': 31}
+    # set dictionary for the days of each month for leap years
+    # leap_year = {'01':31, '02':28, '03':31, '04':30, '05':31, '06':30, '07':31, '08':31, '09':30, '10':31, '11':30, '12':31}
+
+    # set curr_month to be equal to the amount of days set in the months_year
+    curr_month = months_year[str(month)]
+
+    # set for loop for increase in days, 86400 seconds in a day
+    while num_sec > 86399:
+        num_sec -= 86400
+        day += 1
+        # if-statement to see if day is less than or equal to the amount of days in month
+        # if false add to month by 1 and reset days to 1
+        if day > curr_month:
+            month += 1
+            day = 1
+        # if statement to see if day of the year is 2 for february
+            if month == 2:
+                if year % 4 == 0:
+                    curr_month = months_year['2'][1]
+                else:
+                    curr_month = months_year['2'][0]
+            else:
+                curr_month = months_year[str(month)]
+        # if True, test to see if the year % 4 is equal to 0
+        # if True set the days_in_month to 29
+        # if False set the days_in_month to 28
+
+        # if-statement to see if the month in the year is less than or equal to 12
+        # if False, add to year by 1 and reset month back to 1
+
+    # set a string value based on the month-day-year
+    if month < 10:
+        month = '0'+str(month)
+    else:
+        month = str(month)
+
+    if day < 10:
+        day = '0'+str(day)
+    else:
+        day = str(day)
+    mmDdYy = month + '-' + day + '-' + str(year)
+
+    return mmDdYy
 
 
 # Function 3
+def endian_formatting(split_answer, endian, negative):
+    answer = ''
+    if endian == 'little':
+        split_answer.reverse()
+    for element in split_answer:
+        answer += element
+        answer += ' '
+    if negative is True:
+        answer = '-' + answer
+    answer = answer[:-1]
+    return answer
+
+
+def endian_split(answer, endian, negative):
+    split_answer = []
+    segment = ''
+    for i in range(len(answer)):
+        segment += answer[i]
+        if i % 2 != 0:
+            split_answer.append(segment)
+            segment = ''
+    return endian_formatting(split_answer, endian, negative)
+
+
 def conv_endian(num, endian='big'):
-    """  """
-    pass
 
-
-print(conv_num('0xAD4'))
+    if endian not in ['big', 'little']:
+        return None
+    negative = False
+    if num < 0:
+        negative = True
+        num *= -1
+    if num == 0:
+        return '0'
+    else:
+        letters = ['A', 'B', 'C', 'D', 'E', 'F']
+        answer = ''
+        new_answer = ''
+        while num != 0:
+            remainder = num % 16
+            if remainder < 10:
+                answer += str(remainder)
+            else:
+                answer += letters[remainder - 10]
+            num = num // 16
+    if len(answer) % 2 != 0:
+        answer += '0'
+    for char in reversed(answer):
+        new_answer += char
+    return endian_split(new_answer, endian, negative)
