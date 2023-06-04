@@ -86,9 +86,9 @@ class TestCase(unittest.TestCase):
 
     def test_conv_num_case3(self):
         """ Negative Float
-        decimal yes, negative yes, hex no => positive float
+        decimal yes, negative yes, hex no => negative float
         """
-        self.assertEqual(conv_num('-123.'), 123.0)
+        self.assertEqual(conv_num('-123.'), -123.0)
         self.assertEqual(conv_num('-0.45'), -0.45)
         self.assertEqual(conv_num('-.45'), None)
 
