@@ -1,4 +1,6 @@
 import unittest
+import random  # for random testing
+import string  # for random testing conv_num
 
 # from task import conv_num, my_datetime, conv_endian
 from task import conv_num
@@ -107,6 +109,78 @@ class TestCase(unittest.TestCase):
         """ Negative Hexadecimal
         decimal no, negative yes, hex yes """
         self.assertEqual(conv_num('-0xAD4'), -2772)
+
+    # ------------- RANDOM TESTS FOR CONV_NUM ---------------------
+    def test_random_int_conv_num(self):
+        """ Forbidden built-in functions are allowed for tests.
+        int() is used here. """
+        for i in range(100000):
+            test_string = ''
+            for j in range(0, 10):
+                test_string += string.digits[random.randint(0, 9)]
+            self.assertEqual(conv_num(test_string), int(test_string))
+
+        for i in range(100000):
+            first_string = ''
+            for j in range(0, 10):
+                first_string += string.digits[random.randint(0, 9)]
+            answer = int(first_string) * -1
+            test_string = '-'
+            test_string += first_string
+            self.assertEqual(conv_num(test_string), answer)
+
+    def test_random_float_conv_num(self):
+        """ Forbidden built-in functions are allowed for tests.
+        float() is used here.
+        - A list of characters is built using random characters chosen from
+        0123456789.
+        - A decimal point is inserted inside the list or at the end of the
+        list.
+        - The list is then joined into a string. """
+        for i in range(100000):
+            test_list = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+            for j in range(0, 10):
+                test_list[j] = string.digits[random.randint(0, 9)]
+            random_int = random.randint(0, 10)
+            if random_int == 10:
+                test_list.append('.')
+            else:
+                test_list.insert(random_int, '.')
+            test_string = ''
+            for k in test_list:
+                test_string += k
+            self.assertEqual(conv_num(test_string), float(test_string))
+
+        for i in range(100000):
+            test_list = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+            for j in range(0, 10):
+                test_list[j] = string.digits[random.randint(0, 9)]
+            random_int = random.randint(0, 10)
+            if random_int == 10:
+                test_list.append('.')
+            else:
+                test_list.insert(random_int, '.')
+            test_string = '-'
+            for k in test_list:
+                test_string += k
+            self.assertEqual(conv_num(test_string), float(test_string))
+
+    def test_random_hex_conv_num(self):
+        """ Forbidden built-in functions are allowed for tests.
+        hex() is used here to change a random integer to a hex string.
+        If testing negatives, test_string is - and the hex string is added
+        to it. Original random int should be the answer unless original
+        random int * -1 is used to test negative hex strings. """
+        for i in range(100000):
+            random_int = random.randint(0, 200000)
+            test_string = hex(random_int)
+            self.assertEqual(conv_num(test_string), random_int)
+
+        for i in range(100000):
+            random_int = random.randint(0, 200000)
+            test_string = '-'
+            test_string += hex(random_int)
+            self.assertEqual(conv_num(test_string), random_int * -1)
 
     # ---------------------TESTS FOR MY_DATETIME------------------------------
 
