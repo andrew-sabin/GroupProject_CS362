@@ -1,4 +1,4 @@
-# Function 1
+# Function 1 Alwin Nocom
 import string  # for easier importing of digits & characters
 
 
@@ -206,31 +206,33 @@ def negative_hexadecimal(num_str):
     return None if answer is None else answer * -1
 
 
-# Function 2
+# Function 2 Andrew Sabin
 def my_datetime(num_sec):
-    """ Returns the mm-dd-yyyy string value based on how many seconds were entered for num_sec"""
-    # set values for default month, day, year
+    """ Returns a mm-dd-yyyy date based on the number of seconds in days after 01-01-1970
+    where num_sec represents the number of seconds placed into the function. """
+    # default values for month, day, year based on 01-01-1970
     month = 1
     day = 1
     year = 1970
 
-    # set dictionary for the days of each month for normal years
+    # dictionary for the days of each month for normal years
     # key is the month, value is the amount of days in that month
     months_year = {'1': 31, '2': [28, 29], '3': 31, '4': 30, '5': 31,
                    '6': 30, '7': 31, '8': 31, '9': 30, '10': 31, '11': 30, '12': 31}
 
-    # set curr_month to be equal to the amount of days set in the months_year
+    # curr_month to be equal to the amount of days set in the months_year
     curr_month = months_year[str(month)]
 
-    # set while loop to increase in days and decrease in seconds per 86400 seconds until
-    # num_sec is no longer greater or equal to 36399
+    # while loop to increase in days and decrease in seconds for num_sec per 86400 seconds
+    # until num_sec is no longer greater or equal to 36399
+    # resets days to 1 if larger than curr_month and month back to 1 if month is larger than 12
+    # once month reaches 2 it checks to see if the year is a leap year and curr_month to 28 if not and 29 if it is
     while num_sec > 86399:
         num_sec -= 86400
         day += 1
         if day > curr_month:
             month += 1
             day = 1
-        # if statement to see if day of the year is 2 for february
             if month > 12:
                 month = 1
                 year += 1
@@ -243,26 +245,26 @@ def my_datetime(num_sec):
             else:
                 curr_month = months_year[str(month)]
 
-    # date_to_string() takes the month, day, and year variables
-    # and returns a string with the date formatted as 'MM-DD-YYYY'
-    def date_to_string(month, day, year):
-        if month < 10:
-            str_month = '0'+str(month)
-        else:
-            str_month = str(month)
-
-        if day < 10:
-            str_day = '0'+str(day)
-        else:
-            str_day = str(day)
-        mmDdYy = str_month + '-' + str_day + '-' + str(year)
-
-        return mmDdYy
-    string_date = date_to_string(month, day, year)
-    return string_date
+    return date_to_string(month, day, year)
 
 
-# Function 3
+def date_to_string(month, day, year):
+    """Helper function for my_datetime that takes in the day, month, and year variables to be 
+    placed into a calander date format of MM-DD-YYYY."""
+    if month < 10:
+        str_month = '0'+str(month)
+    else:
+        str_month = str(month)
+    if day < 10:
+        str_day = '0'+str(day)
+    else:
+        str_day = str(day)
+    mmDdYy = str_month + '-' + str_day + '-' + str(year)
+
+    return mmDdYy
+
+
+# Function 3  Christopher O Neill
 def endian_formatting(split_answer, endian, negative):
     answer = ''
     if endian == 'little':
