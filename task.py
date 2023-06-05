@@ -249,7 +249,7 @@ def my_datetime(num_sec):
 
 
 def date_to_string(month, day, year):
-    """Helper function for my_datetime that takes in the day, month, and year variables to be 
+    """Helper function for my_datetime that takes in the day, month, and year variables to be
     placed into a calander date format of MM-DD-YYYY."""
     if month < 10:
         str_month = '0'+str(month)
