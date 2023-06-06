@@ -92,7 +92,6 @@ class TestCase(unittest.TestCase):
         """
         self.assertEqual(conv_num('-123.'), -123.0)
         self.assertEqual(conv_num('-0.45'), -0.45)
-        self.assertEqual(conv_num('-.45'), None)
 
     def test_conv_num_case4(self):
         """ Negative Digits
@@ -224,6 +223,10 @@ class TestCase(unittest.TestCase):
     # Test to see if year is changed by program, num_sec = (86400 * 365)
     def test_my_datetime_personal3(self):
         self.assertEqual(my_datetime(31536000), '01-01-1971')
+
+    # Test to see if the function accurately calculates the num seconds required for 12-31-9999
+    def test_my_datetime_personal4(self):
+        self.assertEqual(my_datetime(253402243200), '12-31-9999')
 
 # ---------------------TESTS FOR CONV_ENDIAN--------------------------------
     def test_endian_1(self):

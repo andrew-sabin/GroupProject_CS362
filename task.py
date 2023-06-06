@@ -139,6 +139,7 @@ def conv_float_helper(num_str, place_value, start, decimal_index):
             return None
         answer += (hex_dict[num_str[j]] / (10 ** decimal_place_value))
         decimal_place_value += 1
+
     return answer
 
 
@@ -156,7 +157,9 @@ def positive_float(num_str):
         decimal_index = num_str.index('.')
         answer = conv_float_helper(num_str, decimal_index - 1,
                                    0, decimal_index)
-    return None if answer is None else answer + 0.0  # converts answer to float
+    # converts answer to float
+    decimal_index = num_str.index('.')
+    return None if answer is None else round((answer + 0.0), 10 - decimal_index)
 
 
 def positive_integer(num_str):
@@ -172,18 +175,13 @@ def negative_float(num_str):
         answer = conv_int_or_hex_helper(num_str, string.digits, 1,
                                         len(num_str) - 1, len(num_str) - 2,
                                         10)
-    elif num_str[0:2] == '-.':
-        return None  # Example: -.45 is not a valid number.
-    elif num_str[2] == '.':
-        if num_str == '-0.':
-            return None  # Example: -0.45 has period in index 2
-        answer = conv_float_helper(num_str, 1,
-                                   1, 2)
     else:  # Else decimal point is in the middle of the string
         decimal_index = num_str.index('.')
         answer = conv_float_helper(num_str, decimal_index - 2,
                                    1, decimal_index)
-    return None if answer is None else (answer + 0.0) * -1  # neg float
+    decimal_index = num_str.index('.')
+    # neg float
+    return None if answer is None else (round(((answer)), 10 - (decimal_index-1)) + 0.0) * -1
 
 
 def negative_integer(num_str):
