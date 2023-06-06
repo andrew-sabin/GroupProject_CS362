@@ -139,6 +139,7 @@ def conv_float_helper(num_str, place_value, start, decimal_index):
             return None
         answer += (hex_dict[num_str[j]] / (10 ** decimal_place_value))
         decimal_place_value += 1
+
     return answer
 
 
@@ -156,7 +157,9 @@ def positive_float(num_str):
         decimal_index = num_str.index('.')
         answer = conv_float_helper(num_str, decimal_index - 1,
                                    0, decimal_index)
-    return None if answer is None else answer + 0.0  # converts answer to float
+    # converts answer to float
+    decimal_index = num_str.index('.')
+    return None if answer is None else round((answer + 0.0), 10 - decimal_index)
 
 
 def positive_integer(num_str):
@@ -183,7 +186,9 @@ def negative_float(num_str):
         decimal_index = num_str.index('.')
         answer = conv_float_helper(num_str, decimal_index - 2,
                                    1, decimal_index)
-    return None if answer is None else (answer + 0.0) * -1  # neg float
+    decimal_index = num_str.index('.')
+    # neg float
+    return None if answer is None else (round(((answer + 0.0)), 10 - (decimal_index-1)) + 0.0) * -1
 
 
 def negative_integer(num_str):
