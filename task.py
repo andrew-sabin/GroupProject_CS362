@@ -266,21 +266,30 @@ def date_to_string(month, day, year):
 
 # Function 3  Christopher O Neill
 def endian_formatting(split_answer, endian, negative):
+    """This function properly formats the answer as a hex including
+    endian into account and adding spaces where needed."""
     answer = ''
+    # If little edian reverse list
     if endian == 'little':
         split_answer.reverse()
+    # Format answer with characters properly grouped
     for element in split_answer:
         answer += element
         answer += ' '
+    # Add negative if needed
     if negative is True:
         answer = '-' + answer
+    # Remove extra space added at end of string
     answer = answer[:-1]
     return answer
 
 
 def endian_split(answer, endian, negative):
+    """Takes the hex and splits it into two characters per element in a list
+    to allow for proper formating"""
     split_answer = []
     segment = ''
+    # Add each pair of characters as an element to the list
     for i in range(len(answer)):
         segment += answer[i]
         if i % 2 != 0:
@@ -290,16 +299,19 @@ def endian_split(answer, endian, negative):
 
 
 def conv_endian(num, endian='big'):
-
+    # return None if endian is not big or little
     if endian not in ['big', 'little']:
         return None
     negative = False
+    # Check if number is negative, flag it and make positive if so
     if num < 0:
         negative = True
         num *= -1
+    # Return '0' if number is 0
     if num == 0:
         return '0'
     else:
+        # convert to unformatted hex string
         letters = ['A', 'B', 'C', 'D', 'E', 'F']
         answer = ''
         new_answer = ''
@@ -310,6 +322,7 @@ def conv_endian(num, endian='big'):
             else:
                 answer += letters[remainder - 10]
             num = num // 16
+    # add leading zero if needed
     if len(answer) % 2 != 0:
         answer += '0'
     for char in reversed(answer):
