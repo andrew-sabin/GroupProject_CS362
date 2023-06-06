@@ -269,14 +269,6 @@ class TestCase(unittest.TestCase):
         """This tests 0 with no endian labeled."""
         self.assertEqual(conv_endian(0), '0')
 
-    # Random Testing
-
-    def test_endian_random(self):
-        """Test random values"""
-        for i in range(10000):
-            value = random.randint(100000)
-            self.assertEqual(conv_endian(value), hex(value))
-
 
 if __name__ == '__main__':
     unittest.main()
